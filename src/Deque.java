@@ -15,10 +15,6 @@ public class Deque<Item> implements Iterable<Item> {
      * Construct an empty deque
      */
    public Deque() {
-       first = new Node();
-       last = new Node();
-       first.next = last;
-       last.prev = first;
        }
    
    /**
@@ -34,7 +30,7 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public int size() {
-    return 0;
+       return 0;
    }
    
    /**
@@ -56,7 +52,7 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public Item removeFirst() {
-    return null;
+       return null;
    }
    
    /**
@@ -64,7 +60,7 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public Item removeLast() {
-    return null;
+       return null;
    }
    
    /**
@@ -72,7 +68,7 @@ public class Deque<Item> implements Iterable<Item> {
     * 
     */
    public Iterator<Item> iterator() {
-    return null;
+       return null;
    }
    
    
