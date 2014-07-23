@@ -61,6 +61,9 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public Item removeFirst() {
+       if (first == null) {
+           throw new java.util.NoSuchElementException("Can't remove. The list is empty");
+       }
        Item newFirst = (Item) first.next;
        Node first = (Node) newFirst;
        size--;
