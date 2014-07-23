@@ -33,6 +33,9 @@ public class Deque<Item> implements Iterable<Item> {
     * @param item
     */
    public void addFirst(Item item) {
+       if (item == null) {
+           throw new NullPointerException("Can't add a null object.");
+       }
        Node tempFirst = first;
        Node first = (Node) item;
        first.next = tempFirst;
@@ -44,6 +47,9 @@ public class Deque<Item> implements Iterable<Item> {
     * @param item
     */
    public void addLast(Item item) {
+       if (item == null) {
+           throw new NullPointerException("Can't add a null object.");
+       }
        Node tempLast = last;
        Node last = (Node) item;
        last.prev = tempLast;
@@ -66,6 +72,9 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public Item removeLast() {
+       if (first == null) {
+           throw new java.util.NoSuchElementException("Can't remove. The list is empty");
+       }
        Item newLast = (Item) last.prev;
        Node last = (Node) newLast;
        size--;
