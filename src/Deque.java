@@ -2,27 +2,21 @@ import java.util.Iterator;
 
 public class Deque<Item> implements Iterable<Item> {
     
-    Node first = null;
-    Node last = null;
+    private Node first;
+    private Node last;
     
     private class Node {
         Item item;
         Node next;
         Node prev;
     }
-
-    /**
-     * Construct an empty deque
-     */
-   public Deque() {
-       }
    
    /**
     * Is the deque empty?
     * @return
     */
    public boolean isEmpty() {
-       return false;
+       return first == null;
    }
    
    /**
@@ -30,7 +24,11 @@ public class Deque<Item> implements Iterable<Item> {
     * @return
     */
    public int size() {
-       return 0;
+       int size = 0;
+       for (Node n = first; n.next != null; n = n.next) {
+           size++;
+       }
+       return size;
    }
    
    /**
@@ -38,6 +36,7 @@ public class Deque<Item> implements Iterable<Item> {
     * @param item
     */
    public void addFirst(Item item) {
+       
    }
    
    /**
