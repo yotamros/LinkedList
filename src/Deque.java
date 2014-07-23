@@ -37,7 +37,8 @@ public class Deque<Item> implements Iterable<Item> {
            throw new NullPointerException("Can't add a null object.");
        }
        Node tempFirst = first;
-       Node first = (Node) item;
+       Node first = new Node();
+       first.item = item;
        first.next = tempFirst;
        size++;
    }
@@ -51,7 +52,8 @@ public class Deque<Item> implements Iterable<Item> {
            throw new NullPointerException("Can't add a null object.");
        }
        Node tempLast = last;
-       Node last = (Node) item;
+       Node last = new Node();
+       last.item = item;
        last.prev = tempLast;
        size++;
    }
@@ -64,10 +66,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (first == null) {
            throw new java.util.NoSuchElementException("Can't remove. The list is empty");
        }
-       Item newFirst = (Item) first.next;
-       Node first = (Node) newFirst;
+       Node copyOfFirst = first;
+       Node newFirst = first.next;
+       Node first = newFirst;
        size--;
-       return (Item) first;
+       return copyOfFirst.item;
    }
    
    /**
@@ -78,10 +81,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (first == null) {
            throw new java.util.NoSuchElementException("Can't remove. The list is empty");
        }
-       Item newLast = (Item) last.prev;
-       Node last = (Node) newLast;
+       Node copyOfLast = last;
+       Node newLast = last.prev;
+       Node last = newLast;
        size--;
-       return (Item) last;
+       return copyOfLast.item;
    }
    
    /**
