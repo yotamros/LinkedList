@@ -4,7 +4,6 @@ public class Deque<Item> implements Iterable<Item> {
     
     private Node first;
     private Node last;
-    private Node temp;
     private int size = 0;
     
     private class Node {
@@ -37,12 +36,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (item == null) {
            throw new NullPointerException("Can't add a null object.");
        }
-       temp = first;
-       Node newFirst = new Node();
-       newFirst.item = item;
-       newFirst.next = temp;
-       newFirst.prev = null;
-       first = newFirst;
+       Node node = new Node();
+       node.item = item;
+       node.next = first;
+       node.prev = null;
+       first = node;
        size++;
    }
    
@@ -54,12 +52,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (item == null) {
            throw new NullPointerException("Can't add a null object.");
        }
-       temp = last;
-       Node newLast = new Node();
-       newLast.item = item;
-       newLast.next = null;
-       newLast.prev = temp;
-       last = newLast;
+       Node node = new Node();
+       node.item = item;
+       node.next = null;
+       node.prev = last;
+       last = node;
        size++;
    }
    
@@ -71,11 +68,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (size == 0) {
            throw new java.util.NoSuchElementException("Can't remove. The list is empty");
        }
-       temp = first;
-       Node newFirst = first.next;
-       first = newFirst;
+       Node copyOfFirst = first;
+       Node node = first.next;
+       first = node;
        size--;
-       return temp.item;
+       return copyOfFirst.item;
    }
    
    /**
@@ -86,11 +83,11 @@ public class Deque<Item> implements Iterable<Item> {
        if (size == 0) {
            throw new java.util.NoSuchElementException("Can't remove. The list is empty");
        }
-       temp = last;
-       Node newLast = last.prev;
-       last = newLast;
+       Node copyOfLast = last;
+       Node node = last.prev;
+       last = node;
        size--;
-       return temp.item;
+       return copyOfLast.item;
    }
    
    /**
