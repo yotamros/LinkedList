@@ -3,14 +3,13 @@ import java.util.Random;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     
-    private Item[] array;
+    private Item[] array = (Item[]) new Object[1];
     private int size = 0;
     
     /*
      * Construct an empty randomized queue
      */
     public RandomizedQueue() {
-        array = (Item[]) new Object[1];
     }
     
     /*
@@ -45,8 +44,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         size++;
         System.out.println("there are " + size + " items in the array and the "
                 + "array length is " + array.length);
-
-
     }
     
     private void resize(int i) {
@@ -78,7 +75,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (array[rand] == null) {
             rand = rand(size);
         }
-        Object itemToRemove = array[rand];
+        Item itemToRemove = array[rand];
         array[rand] = null;
         size--;
         if (size > 0 && size == array.length/4) {
@@ -86,14 +83,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         System.out.println("removed " + itemToRemove + " there are " + 
         size + " items and the length is " + array.length);
-        return (Item) itemToRemove;
+        return itemToRemove;
     }
     
     private int rand(int length) {
         Random rand = new Random();
-        if (size == 1) {
-            return 0;
-        }
         int randNum = rand.nextInt(length);
         return randNum;
     }
@@ -105,7 +99,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (size == 0) {
             throw new java.util.NoSuchElementException("The queue is empty");
         }
-        return null;
+        
+        int rand = rand(size);
+        if (array[rand] == null) {
+            rand = rand(size);
+        }
+        Item sample = array[rand];
+        System.out.println("sample: " + sample);
+        return sample;
     }
     
     
@@ -114,7 +115,30 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @see java.lang.Iterable#iterator()
      */
     public Iterator<Item> iterator() {
-        return null;
+        return new QueueIterator();
+    }
+    
+    private class QueueIterator implements Iterator<Item> {
+        
+        int current = 0;
+        
+        public boolean hasNext() {
+            return array[current] == null;
+            
+        }
+
+        @Override
+        public Item next() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public void remove() {
+            // TODO Auto-generated method stub
+            
+        }
+        
     }
     
     
@@ -122,13 +146,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         RandomizedQueue<String> rq = new RandomizedQueue<String>();
         rq.enqueue("jojo");
         rq.enqueue("momo");
-        rq.enqueue("toto");
-        rq.enqueue("yoyo");
-        rq.printArray();
-        rq.dequeue();
-        rq.dequeue();
-        rq.dequeue();
-        rq.printArray();
+
+        rq.sample();
 
     }
 }
