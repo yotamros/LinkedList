@@ -40,7 +40,6 @@ public class Deque<Item> implements Iterable<Item> {
        Node node = new Node();
        node.item = item;
        node.next = first;
-       node.prev = null;
        first = node;
        size++;
    }
@@ -55,7 +54,6 @@ public class Deque<Item> implements Iterable<Item> {
        }
        Node node = new Node();
        node.item = item;
-       node.next = null;
        node.prev = last;
        last = node;
        size++;
@@ -70,8 +68,7 @@ public class Deque<Item> implements Iterable<Item> {
            throw new java.util.NoSuchElementException("Can't remove. The list is empty");
        }
        Node copyOfFirst = first;
-       Node node = first.next;
-       first = node;
+       first = first.next;
        size--;
        return copyOfFirst.item;
    }
@@ -123,14 +120,14 @@ public class Deque<Item> implements Iterable<Item> {
    }
    
    private void printItemsFromBeginning() {
-       for (int i=0; i<size; i++) {
+       while (first != null) {
            System.out.println(first.item);
            first = first.next;
        }
    }
    
    private void printItemsFromEnd() {
-       for (int i=0; i<size; i++) {
+       while (last != null) {
            System.out.println(last.item);
            last = last.prev;
        }
@@ -138,5 +135,8 @@ public class Deque<Item> implements Iterable<Item> {
    
    public static void main(String[] args) {
        Deque<String> test = new Deque<String>();
+       test.addFirst("jojo");
+       test.addFirst("momo");
+       test.printItemsFromEnd();
    }
 }
