@@ -3,14 +3,14 @@ import java.util.Random;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     
-    private Item[] array = (Item[]) new Object[1];
+    private Object[] array = new Object[1];
     private int size = 0;
     
     /*
      * Is the queue empty?
      */
     public boolean isEmpty() {
-        return ( size == 0 );
+        return size == 0;
     }
     
     /*
@@ -25,7 +25,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * Add the item
      */
     public void enqueue(Item item) {
-        
         if (item == null) {
             throw new NullPointerException("Can't add a null item");
         }
@@ -37,20 +36,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         array[size] = item;
         System.out.println("added " + item + " at " + size);
         size++;
-        System.out.println("there are " + size + " items in the array and the "
-                + "array length is " + array.length);
+        //System.out.println("there are " + size + " items in the array and the "
+        //        + "array length is " + array.length);
     }
     
-    private void resize(int i) {
-        Item[] copyArray = (Item[]) new Object[i];
-        for (int j = 0; j < size; j++) {
-            copyArray[j] = array[j];
+    private void resize(int newSize) {
+        Object[] copyArray = new Object[newSize];
+        for (int i = 0; i < size; i++) {
+            copyArray[i] = array[i];
         }
         array = copyArray;
-        System.out.println("Created a new array of size " + i);
+        //System.out.println("Created a new array of size " + newSize);
     }
 
-    private void printArray() {
+    public void printArray() {
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
@@ -59,21 +58,22 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     /*
      * Delete and return a random item
      */
+    @SuppressWarnings("unchecked")
     public Item dequeue() {
-        
         if (size == 0) {
             throw new java.util.NoSuchElementException("The queue is empty");
         }
         
-        Item itemToRemove = array[rand(size)];
-        array[rand(size)] = array[size-1];
+        int rand = rand(size);
+        Item itemToRemove = (Item) array[rand];
+        array[rand] = array[size-1];
         array[size-1] = null;
         size--;
         if (size > 0 && size == array.length/4) {
             resize(array.length/2);
         }
-        System.out.println("removed " + itemToRemove + " there are " + 
-        size + " items and the length is " + array.length);
+        //System.out.println("removed " + itemToRemove + " there are " + 
+        //size + " items and the length is " + array.length);
         return itemToRemove;
     }
     
@@ -86,16 +86,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     /*
      * Return (but do not delete) a random item
      */
+    @SuppressWarnings("unchecked")
     public Item sample() {
         if (size == 0) {
             throw new java.util.NoSuchElementException("The queue is empty");
         }
         
-        Item sample = array[rand(size)];
+        Item sample = (Item) array[rand(size)];
         System.out.println("sample: " + sample);
         return sample;
     }
-    
     
     /*
      * (non-Javadoc) Return an independent iterator over items in random order
@@ -106,20 +106,24 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     private class QueueIterator implements Iterator<Item> {
+        RandomizedQueue<Item> copy = new RandomizedQueue<Item>();
         
-        int current = rand(size);
+        @SuppressWarnings("unchecked")
+        public QueueIterator() {
+            for (int i = 0; i<size; i++) {
+                copy.enqueue((Item) array[i]);
+            }
+        }
         
         public boolean hasNext() {
-            return array[current] == null;
+            return copy.size != 0;
         }
 
         public Item next() {
-            if (array[current] == null) {
+            if (copy.array[rand(copy.size)] == null) {
                 throw new java.util.NoSuchElementException("There are no more items.");
             }
-            Item next = array[current];
-            current++;
-            return next;
+            return copy.dequeue();
         }
 
         public void remove() { 
@@ -135,12 +139,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         rq.enqueue("jojo");
         rq.enqueue("momo");
         rq.enqueue("toto");
-        rq.enqueue("lolo");
-        rq.enqueue("vovo");
-        rq.printArray();
-        rq.dequeue();
-        rq.dequeue();
-        rq.dequeue();
-        rq.sample();
+        rq.enqueue("koko");
+        rq.enqueue("roro");
+        Iterator<String> iterator = rq.iterator();
+        while (iterator.hasNext()) {
+            String item = iterator.next();
+            System.out.println(item);
+        }
     }
 }
